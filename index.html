@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name=”viewport” content=”width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no”>
+	<meta name=”viewport” content=”width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,
+		user-scalable=no”>
 	<meta http-equiv="Expires" content="0">
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Cache-control" content="no-cache">
@@ -11,73 +12,50 @@
 	<title>懒加载</title>
 </head>
 <style>
-html,body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	text-align: center;
-	background: #999999;
-}
-#wrapper {
-	display: inline-block;
-	width: 888px;
-}
-#wrapper img {
-	width: 388px;
-	height: 411px;
-}
-</style>
-<body>
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		text-align: center;
+		background: #999999;
+	}
 
-<div id="wrapper">
-	
-</div>
+	#wrapper {
+		display: inline-block;
+		width: 888px;
+	}
+
+	#wrapper img {
+		width: 388px;
+		height: 411px;
+		margin-right: 10px;
+		margin-top: 5px;
+		border-radius: 10px;
+	}
+</style>
+
+<body>
+	<h4>图片懒加载Demo</h4>
+	<div id="wrapper">
+
+	</div>
+	<script src="./lazy-load.js"></script>
 	<script>
 		
 		let imgStr = ''
-		for(let i=0; i<15; i++) {
-			imgStr += '<img class="lazy" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590643917588&di=a452e6a71089c460500913a6d68b47c3&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0195f55972f18ca8012193a342310a.gif" pic="http://jzlx1.a142.ottcn.com:10056/portal/img/'+ i +'.png" />'
+		for (let i = 0; i < 15; i++) {
+			imgStr += '<img class="lazy" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590643917588&di=a452e6a71089c460500913a6d68b47c3&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0195f55972f18ca8012193a342310a.gif" pic="http://183.250.184.156:10056/ilearn/temp/img/' + i + '.png" />'
 		}
-		for(let i=0; i<15; i++) {
-			imgStr += '<img class="lazy" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590643917588&di=a452e6a71089c460500913a6d68b47c3&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0195f55972f18ca8012193a342310a.gif" pic="http://jzlx1.a142.ottcn.com:10056/portal/img/'+ i +'-.png" />'
+		for (let i = 0; i < 15; i++) {
+			imgStr += '<img class="lazy" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590643917588&di=a452e6a71089c460500913a6d68b47c3&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0195f55972f18ca8012193a342310a.gif" pic="http://183.250.184.156:10056/ilearn/temp/img/' + i + '-.png" />'
 		}
-		document.getElementById('wrapper').innerHTML = imgStr
-		let imgEle = document.getElementsByClassName('lazy')
-		// let len = imgEle.length
-
-		const lazyImg = {
-			init(options) {
-				this.className = options.className
-				this.imgEleArr = document.getElementsByClassName(this.className)
-				this.start()
-				this.loadCtr()
-			},
-			loadCtr() {
-				const _this = this
-				window.onscroll = function() {
-					_this.start()
-				}
-			},
-			isLoad(curImg) {
-				let clientH = document.body.clientHeight
-				let imgTop = curImg.offsetTop
-				let winTop = window.pageYOffset
-				return winTop+clientH > imgTop
-			},
-			hasLaded(curImg) {
-				return curImg.src === curImg.getAttribute('pic')
-			},
-			start() {
-				const _this = this
-				let eleArr = [].slice.call(this.imgEleArr)
-				eleArr.forEach(function(ele) {
-					if(_this.isLoad(ele) && !_this.hasLaded(ele)) {
-						ele.src = ele.getAttribute('pic')
-					}
-				})
-			}
-		}
-		lazyImg.init({className: 'lazy'})
+		// document.getElementById('wrapper').innerHTML = imgStr
+		lazyImg()
+		// 拓展jQuery全局对象
+		// jQuery.extend({
+		// 	lazyImg: lazyImg
+		// })
 	</script>
 </body>
 
