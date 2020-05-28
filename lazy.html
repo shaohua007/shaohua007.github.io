@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name=”viewport” content=”width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no”>
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-control" content="no-cache">
+	<meta http-equiv="Cache" content="no-cache">
+	<title>懒加载</title>
+</head>
+<style>
+html,body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	text-align: center;
+	background: #999999;
+}
+#wrapper {
+	display: inline-block;
+	width: 888px;
+}
+#wrapper img {
+	width: 388px;
+	height: 411px;
+}
+</style>
+<body>
+
+<div id="wrapper">
+	
+</div>
+	<script>
+		
+		let imgStr = ''
+		for(let i=0; i<15; i++) {
+			imgStr += '<img class="lazy" src="./music.png" pic="http://183.250.184.156:10056/ilearn/temp/img/'+ i +'.png" />'
+		}
+		document.getElementById('wrapper').innerHTML = imgStr
+		let imgEle = document.getElementsByClassName('lazy')
+		// let len = imgEle.length
+
+		const lazyImg = {
+			init(options) {
+				this.className = options.className
+				this.imgEleArr = document.getElementsByClassName(this.className)
+				this.start()
+				this.loadCtr()
+			},
+			loadCtr() {
+				const _this = this
+				window.onscroll = function() {
+					_this.start()
+				}
+			},
+			isLoad(curImg) {
+				let clientH = document.body.clientHeight
+				let imgTop = curImg.offsetTop
+				let winTop = window.pageYOffset
+				return winTop+clientH > imgTop
+			},
+			hasLaded(curImg) {
+				return curImg.src === curImg.getAttribute('pic')
+			},
+			start() {
+				const _this = this
+				let eleArr = [].slice.call(this.imgEleArr)
+				eleArr.forEach(function(ele) {
+					if(_this.isLoad(ele) && !_this.hasLaded(ele)) {
+						ele.src = ele.getAttribute('pic')
+					}
+				})
+			}
+		}
+		lazyImg.init({className: 'lazy'})
+	</script>
+</body>
+
+</html>
