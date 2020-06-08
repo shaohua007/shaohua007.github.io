@@ -2,14 +2,20 @@
     let _lazyImg = function (option) {
         const options = {
             className: 'lazy', //  需要懒加载的图片的类名
-            delay: 100          // 设置防抖延时
+            delay: 100,        // 设置防抖延时
+            defaultSrc: './loading.gif'  //  默认图片资源
         }
         Object.assign(options, option)
         let imgEleArr = document.getElementsByClassName(options.className)
         const eleArr = Array.prototype.slice.call(imgEleArr)
-        start()
-        loadCtr()
-        
+        init()
+        function init() {
+            eleArr.forEach(function (ele) {
+                ele.src = options.defaultSrc
+            })
+            start()
+            loadCtr()
+        }
         function start() {
             eleArr.forEach(function (ele) {
                 if (isLoad(ele) && !hasLaded(ele)) {
@@ -29,7 +35,7 @@
             return winTop + clientH > imgTop && imgTop > winTop - imgH
         }
         function hasLaded(curImg) {
-            return curImg.src === curImg.getAttribute('pic')
+            return curImg.src === curImg.getAttribute('lazy-src')
         }
         function debounce(func, delay) {
             let timer = null;
