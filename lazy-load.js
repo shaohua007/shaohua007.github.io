@@ -19,7 +19,7 @@
         function start() {
             eleArr.forEach(function (ele) {
                 if (isLoad(ele) && !hasLaded(ele)) {
-                    ele.src = ele.getAttribute('pic')
+                    ele.src = ele.getAttribute('lazy-src')
                 }
             })
         }
