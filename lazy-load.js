@@ -17,9 +17,11 @@ class LazyLoad {
         this.loadCtr()
     }
     start() {
+        const _this = this
         for (let ele of this.eleArr) {
             if (this.isLoad(ele) && !this.hasLoaded(ele)) {
                 ele.src = ele.getAttribute('lazy-src')
+                ele.onerror = () => ele.src = _this.options.defaultSrc  //  图片如果加载失败使用默认图片
             }
         }
     }
