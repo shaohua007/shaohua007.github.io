@@ -39,12 +39,12 @@ class LazyLoad {
         return curImg.src === curImg.getAttribute('lazy-src')
     }
     debounce(func, delay) {
-        let timer = null
+        let timer = null,_this = this
         return ()=> {
             timer && clearTimeout(timer)
             timer = setTimeout(()=> {
                 timer = null
-                func()
+                func.call(_this)
             }, delay)
         }
     }
