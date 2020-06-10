@@ -3,7 +3,7 @@ class LazyLoad {
         this.options = Object.assign({
             className: 'lazy',   //  需要懒加载的图片的类名
             delay: 100,          //  设置防抖延时
-            defaultImg: './loading.gif'
+            defaultSrc: './loading.gif'
         }, options)
         let imgEleArr = document.getElementsByClassName(this.options.className)
         this.eleArr = [...imgEleArr]
