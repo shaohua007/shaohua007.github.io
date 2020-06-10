@@ -24,7 +24,7 @@ class LazyLoad {
         }
     }
     loadCtr() {
-        window.onscroll = debounce(this.start, this.options.delay)
+        window.onscroll = this.debounce(LazyLoad.start, LazyLoad.options.delay)
     }
     isLoad(curImg) {
         let clientH = document.body.clientHeight,
@@ -48,7 +48,6 @@ class LazyLoad {
         }
     }
 }
-window.lazyImg = LazyLoad
 /*
 (function () {
     let _lazyImg = function (option) {
