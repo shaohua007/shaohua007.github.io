@@ -11,7 +11,7 @@ class LazyLoad {
     }
     init() {
         for (let ele of this.eleArr) {
-            ele.src = options.defaultSrc
+            ele.src = this.options.defaultSrc
         }
         this.start()
         this.loadCtr()
