@@ -1,5 +1,5 @@
 class LazyLoad {
-    constructor(options) {
+    constructor(options = {}) {
         this.options = Object.assign({
             className: 'lazy',   //  需要懒加载的图片的类名
             delay: 100,          //  设置防抖延时
