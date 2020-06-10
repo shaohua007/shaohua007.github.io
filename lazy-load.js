@@ -1,3 +1,55 @@
+class LazyLoad {
+    constructor(options) {
+        this.options = Object.assign({
+            className: 'lazy',   //  需要懒加载的图片的类名
+            delay: 100,          //  设置防抖延时
+            defaultImg: './loading.gif'
+        }, options)
+        let imgEleArr = document.getElementsByClassName(this.options.className)
+        this.eleArr = [...imgEleArr]
+        this.init()              //  直接初始化调用懒加载
+    }
+    init() {
+        for (let ele of this.eleArr) {
+            ele.src = options.defaultSrc
+        }
+        this.start()
+        this.loadCtr()
+    }
+    start() {
+        for (let ele of this.eleArr) {
+            if (this.isLoad(ele) && !this.hasLoaded(ele)) {
+                ele.src = ele.getAttribute('lazy-src')
+            }
+        }
+    }
+    loadCtr() {
+        window.onscroll = debounce(this.start, this.options.delay)
+    }
+    isLoad(curImg) {
+        let clientH = document.body.clientHeight,
+        imgTop = curImg.offsetTop,
+        imgH = curImg.offsetHeight,
+        winTop = window.pageYOffset
+        //  图片在浏览器窗口可视范围内
+        return winTop + clientH > imgTop && imgTop > winTop - imgH
+    }
+    hasLoaded(curImg) {
+        return curImg.src === curImg.getAttribute('lazy-src')
+    }
+    debounce(func, delay) {
+        let timer = null
+        return ()=> {
+            timer && clearTimeout(timer)
+            timer = setTimeout(()=> {
+                timer = null
+                func()
+            }, delay)
+        }
+    }
+}
+window.lazyImg = LazyLoad
+/*
 (function () {
     let _lazyImg = function (option) {
         const options = {
@@ -51,4 +103,4 @@
         }
     }
     window.lazyImg = _lazyImg
-})()
+})()*/
